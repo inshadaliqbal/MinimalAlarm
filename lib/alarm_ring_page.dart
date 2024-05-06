@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'provider_engine.dart';
 
 class AlarmRingPage extends StatelessWidget {
+
+
+
   static const String ringPage = 'alarm_ring_page';
   String title;
   Function functionForSnooze;
@@ -132,3 +135,34 @@ class AlarmRingPage extends StatelessWidget {
     );
   }
 }
+// Future<void> RingPageNavigator() async => Alert(
+//     context: context,
+//     title: "LOGIN",
+//     content: Column(
+//       children: <Widget>[
+//         TextField(
+//           decoration: InputDecoration(
+//             icon: Icon(Icons.account_circle),
+//             labelText: 'Username',
+//           ),
+//         ),
+//         TextField(
+//           obscureText: true,
+//           decoration: InputDecoration(
+//             icon: Icon(Icons.lock),
+//             labelText: 'Password',
+//           ),
+//         ),
+//       ],
+//     ),
+//     buttons: [
+//       DialogButton(
+//         onPressed: () => Navigator.pop(context),
+//         child: Text(
+//           "LOGIN",
+//           style: TextStyle(color: Colors.white, fontSize: 20),
+//         ),
+//       )
+//     ]).show();
+
+

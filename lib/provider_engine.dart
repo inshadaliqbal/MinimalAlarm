@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:malarm/alarm_ring_page.dart';
 import 'alarm_card_class.dart';
@@ -6,6 +8,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:alarm/alarm.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'main.dart';
 
 class MainEngine extends ChangeNotifier {
   MainEngine() {
@@ -67,13 +72,13 @@ class MainEngine extends ChangeNotifier {
           fileSelectedPath: fileSelectedPath),
     );
     notifyListeners();
-    alarmEngine();
+    alarmEngine(context);
   }
 
   void onChangedFunction(BuildContext context, int index) {
     alarmCardList[index].isActiveSwitch();
     notifyListeners();
-    alarmEngine();
+    alarmEngine(context);
   }
 
   AlarmCardClass listForAlarmEdit(int? indexInt) {
@@ -87,7 +92,7 @@ class MainEngine extends ChangeNotifier {
 
   List<Future<bool>> alarmList = [];
 
-  void alarmEngine() async {
+  void alarmEngine(BuildContext context) async {
     for (int i = 0; i < alarmCardList.length; i++) {
       int hourConverted;
       if (alarmCardList[i].zoneSelected == 'AM' &&
@@ -126,29 +131,12 @@ class MainEngine extends ChangeNotifier {
             enableNotificationOnKill: true,
             androidFullScreenIntent: true);
         alarmList.add(Alarm.set(alarmSettings: alarmSettings));
-        Alarm.ringStream.stream.listen((_) => RingPageNavigator());
+        Alarm.ringStream.stream.listen(
+          (_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),
+        );
       } else {
         Alarm.stop(i);
       }
     }
-  }
-}
-
-class RingPageNavigator extends StatelessWidget {
-  const RingPageNavigator({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AlarmRingPage(
-          title: 'HAI',
-          functionForClose: () {},
-          functionForSnooze: () {},
-        ),
-      ),
-    );
-    return const Placeholder();
   }
 }

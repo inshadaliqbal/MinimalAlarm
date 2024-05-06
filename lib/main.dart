@@ -8,11 +8,14 @@ import 'alarm_card_class.dart';
 import 'dayclass.dart';
 import 'alarm_ring_page.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => MainEngine(),
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         initialRoute: Malarm.malarm,
         routes: {
           Malarm.malarm: (context) => Malarm(),
