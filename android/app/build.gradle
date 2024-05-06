@@ -33,6 +33,8 @@ if (flutterVersionName == null) {
 }
 
 android {
+
+    compileSdkVersion 33
     namespace "com.example.malarm"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion

@@ -23,13 +23,13 @@ void main() {
                 alarmCardClass: AlarmCardClass(
                     alarmTitle: 'New Alarm',
                     daysList: [
-                      Days(day: 'Sunday'),
-                      Days(day: 'Monday'),
-                      Days(day: 'Tuesday'),
-                      Days(day: 'Wednesday'),
-                      Days(day: 'Thursday'),
-                      Days(day: 'Friday'),
-                      Days(day: 'Saturday')
+                      Days(day: 'Sunday',daySelect: false),
+                      Days(day: 'Monday',daySelect: false),
+                      Days(day: 'Tuesday',daySelect: false),
+                      Days(day: 'Wednesday',daySelect: false),
+                      Days(day: 'Thursday',daySelect: false),
+                      Days(day: 'Friday',daySelect: false),
+                      Days(day: 'Saturday',daySelect: false)
                     ],
                     hourSelected: 9,
                     minuteSelected: 35,

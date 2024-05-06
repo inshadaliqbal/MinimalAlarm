@@ -27,8 +27,8 @@ class FAButton extends StatelessWidget {
         size: 30,
       ),
       onPressed: () {
-        // Navigator.pushNamed(context, AlarmSet.alarmSet);
-        Navigator.pushNamed(context, AlarmRingPage.ringPage);
+        Navigator.pushNamed(context, AlarmSet.alarmSet);
+        // Navigator.pushNamed(context, AlarmRingPage.ringPage);
       },
     );
   }

@@ -37,7 +37,7 @@ void AlarmSetSaveButtonFunction(BuildContext context, AlarmSet widget) async {
   if (Provider.of<MainEngine>(context, listen: false).getListLength() ==
       widget.currentIndex + 1) {
     Provider.of<MainEngine>(context, listen: false)
-        .deleteAlarm(widget.currentIndex);
+        .deleteAlarm(widget.currentIndex,context);
     Provider.of<MainEngine>(context, listen: false).addAlarmCard(
       context,
       widget.currentIndex,

@@ -48,7 +48,7 @@ class AlarmCard extends StatelessWidget {
         },
         onLongPress: () {
           Provider.of<MainEngine>(context, listen: false)
-              .deleteAlarm(currentListInt);
+              .deleteAlarm(currentListInt,context);
         },
         child: Container(
           margin: EdgeInsets.all(20.0),

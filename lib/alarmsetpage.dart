@@ -13,25 +13,25 @@ import 'style.dart';
 class AlarmSet extends StatefulWidget {
   static const String alarmSet = 'AlarmSet';
   List<Days> dayRepeat = [
-    Days(day: 'Sunday'),
-    Days(day: 'Monday'),
-    Days(day: 'Tuesday'),
-    Days(day: 'Wednesday'),
-    Days(day: 'Thursday'),
-    Days(day: 'Friday'),
-    Days(day: 'Saturday'),
+    Days(day: 'Sunday',daySelect: false),
+    Days(day: 'Monday',daySelect: false),
+    Days(day: 'Tuesday',daySelect: false),
+    Days(day: 'Wednesday',daySelect: false),
+    Days(day: 'Thursday',daySelect: false),
+    Days(day: 'Friday',daySelect: false),
+    Days(day: 'Saturday',daySelect: false),
   ];
   int currentIndex;
   AlarmCardClass alarmCardClass = AlarmCardClass(
     alarmTitle: 'New Alarm',
     daysList: [
-      Days(day: 'Sunday'),
-      Days(day: 'Monday'),
-      Days(day: 'Tuesday'),
-      Days(day: 'Wednesday'),
-      Days(day: 'Thursday'),
-      Days(day: 'Friday'),
-      Days(day: 'Saturday')
+      Days(day: 'Sunday',daySelect: false),
+      Days(day: 'Monday',daySelect: false),
+      Days(day: 'Tuesday',daySelect: false),
+      Days(day: 'Wednesday',daySelect: false),
+      Days(day: 'Thursday',daySelect: false),
+      Days(day: 'Friday',daySelect: false),
+      Days(day: 'Saturday',daySelect: false)
     ],
     hourSelected: 9,
     minuteSelected: 35,
@@ -141,6 +141,7 @@ class _AlarmSetState extends State<AlarmSet> {
                         buttonFunction: (int i) {
                           setState(() {
                             widget.alarmCardClass.daysList![i].selectDay();
+                            print(widget.alarmCardClass.daysList![i].daySelect);
                           });
                         }),
                   ],

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 class Days{
   String day;
-  bool daySelect;
-  Days({required this.day, this.daySelect = false});
+  bool daySelect = false;
+  Days({required this.day,required this.daySelect});
 
   void selectDay(){
-    daySelect = !daySelect;
+    daySelect = !daySelect!;
   }
 }

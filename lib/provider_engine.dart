@@ -1,20 +1,20 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:malarm/alarm_ring_page.dart';
+import 'package:periodic_alarm/model/alarms_model.dart';
 import 'alarm_card_class.dart';
 import 'dayclass.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:alarm/alarm.dart';
+import 'dayclass.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:periodic_alarm/periodic_alarm.dart';
 
 import 'main.dart';
 
 class MainEngine extends ChangeNotifier {
   MainEngine() {
-    Alarm.init();
+    PeriodicAlarm.init();
   }
 
   bool? status;
@@ -28,13 +28,13 @@ class MainEngine extends ChangeNotifier {
     AlarmCardClass(
         alarmTitle: 'New Alarm',
         daysList: [
-          Days(day: 'Sunday'),
-          Days(day: 'Monday'),
-          Days(day: 'Tuesday'),
-          Days(day: 'Wednesday'),
-          Days(day: 'Thursday'),
-          Days(day: 'Friday'),
-          Days(day: 'Saturday')
+          Days(day: 'Sunday', daySelect: false),
+          Days(day: 'Monday', daySelect: false),
+          Days(day: 'Tuesday', daySelect: false),
+          Days(day: 'Wednesday', daySelect: false),
+          Days(day: 'Thursday', daySelect: false),
+          Days(day: 'Friday', daySelect: false),
+          Days(day: 'Saturday', daySelect: false)
         ],
         hourSelected: 10,
         minuteSelected: 00,
@@ -71,72 +71,78 @@ class MainEngine extends ChangeNotifier {
           vibrateActive: vibrateActive,
           fileSelectedPath: fileSelectedPath),
     );
-    notifyListeners();
     alarmEngine(context);
+    notifyListeners();
   }
 
   void onChangedFunction(BuildContext context, int index) {
     alarmCardList[index].isActiveSwitch();
-    notifyListeners();
     alarmEngine(context);
+    notifyListeners();
   }
 
   AlarmCardClass listForAlarmEdit(int? indexInt) {
     return alarmCardList[indexInt!];
   }
 
-  void deleteAlarm(int indexDelete) {
+  void deleteAlarm(int indexDelete, BuildContext context) {
     alarmCardList.removeAt(indexDelete);
+    alarmEngine(context);
     notifyListeners();
   }
 
   List<Future<bool>> alarmList = [];
 
-  void alarmEngine(BuildContext context) async {
+  void alarmEngine(BuildContext context) {
     for (int i = 0; i < alarmCardList.length; i++) {
       int hourConverted;
       if (alarmCardList[i].zoneSelected == 'AM' &&
           alarmCardList[i].hourSelected == 12) {
         hourConverted = 0;
-        print(1);
       } else if (alarmCardList[i].zoneSelected == 'PM' &&
           alarmCardList[i].hourSelected == 12) {
         hourConverted = 12;
-        print(2);
       } else if (alarmCardList[i].zoneSelected == 'PM') {
         hourConverted = alarmCardList[i].hourSelected + 12;
-        print(3);
       } else {
         hourConverted = alarmCardList[i].hourSelected;
-        print(4);
       }
-      if (alarmCardList[i].isActive!) {
-        final alarmSettings = await AlarmSettings(
-            id: i,
-            dateTime: DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
-                hourConverted,
-                alarmCardList[i].minuteSelected,
-                0,
-                0,
-                0),
-            assetAudioPath: 'assets/real.wav',
-            loopAudio: true,
-            vibrate: true,
-            fadeDuration: 3.0,
-            notificationTitle: 'This is the title',
-            notificationBody: 'This is the body',
-            enableNotificationOnKill: true,
-            androidFullScreenIntent: true);
-        alarmList.add(Alarm.set(alarmSettings: alarmSettings));
-        Alarm.ringStream.stream.listen(
-          (_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),
-        );
-      } else {
-        Alarm.stop(i);
-      }
+
+      alarmDayWiseAdding(hourConverted, i);
+      PeriodicAlarm.ringStream.stream.listen((_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),
+      );
+    }
+  }
+
+  void alarmDayWiseAdding(int hourSelected, int i) {
+    for (AlarmCardClass alarmCard in alarmCardList) {
+      final alarmSettings = AlarmModel(
+        id: i,
+        dateTime: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+            hourSelected,
+            alarmCard.minuteSelected,
+            0,
+            0,
+            0),
+        assetAudioPath: 'assets/real.wav',
+        loopAudio: true,
+        fadeDuration: 3.0,
+        notificationTitle: 'This is the title',
+        notificationBody: 'This is the body',
+        enableNotificationOnKill: true,
+        monday: alarmCard.daysList![1].daySelect,
+        tuesday: alarmCard.daysList![2].daySelect,
+        wednesday: alarmCard.daysList![3].daySelect,
+        thursday: alarmCard.daysList![4].daySelect,
+        friday: alarmCard.daysList![5].daySelect,
+        saturday: alarmCard.daysList![6].daySelect,
+        sunday: alarmCard.daysList![0].daySelect,
+        active: true,
+      );
+      PeriodicAlarm.setOneAlarm(alarmModel: alarmSettings);
     }
   }
 }
