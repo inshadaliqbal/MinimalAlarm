@@ -14,8 +14,19 @@ class Malarm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color(0xFFFDCECF5),
+        title: Center(
+          child: Text(
+            'Alarm',
+            style:
+                TextStyle(fontSize: 20, color: Colors.black, letterSpacing: 2),
+          ),
+        ),
+      ),
       floatingActionButton: const FAButton(),
-      backgroundColor: const Color(0xFFEFEFF1),
+      backgroundColor: const Color(0xFFFDCECF5),
       body: Column(
         children: [
           const AnalogClockContainer(),

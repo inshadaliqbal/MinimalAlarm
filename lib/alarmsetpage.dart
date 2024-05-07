@@ -56,7 +56,7 @@ class _AlarmSetState extends State<AlarmSet> {
         return MainEngine();
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFEFEFF1),
+        backgroundColor: const Color(0xFFFDCECF5),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

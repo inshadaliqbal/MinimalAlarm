@@ -77,7 +77,7 @@ class MainEngine extends ChangeNotifier {
 
   void onChangedFunction(BuildContext context, int index) {
     alarmCardList[index].isActiveSwitch();
-    alarmEngine(context);
+    stopAlarm(index);
     notifyListeners();
   }
 
@@ -114,8 +114,10 @@ class MainEngine extends ChangeNotifier {
     }
   }
 
-  void alarmDayWiseAdding(int hourSelected, int i) {
+  void alarmDayWiseAdding(int hourSelected, int i) async {
+
     for (AlarmCardClass alarmCard in alarmCardList) {
+      print(alarmCard.daysList![2].daySelect);
       final alarmSettings = AlarmModel(
         id: i,
         dateTime: DateTime(
@@ -133,16 +135,19 @@ class MainEngine extends ChangeNotifier {
         notificationTitle: 'This is the title',
         notificationBody: 'This is the body',
         enableNotificationOnKill: true,
-        monday: alarmCard.daysList![1].daySelect,
-        tuesday: alarmCard.daysList![2].daySelect,
-        wednesday: alarmCard.daysList![3].daySelect,
-        thursday: alarmCard.daysList![4].daySelect,
-        friday: alarmCard.daysList![5].daySelect,
-        saturday: alarmCard.daysList![6].daySelect,
-        sunday: alarmCard.daysList![0].daySelect,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false,
         active: true,
       );
-      PeriodicAlarm.setOneAlarm(alarmModel: alarmSettings);
+      await PeriodicAlarm.setOneAlarm(alarmModel: alarmSettings);
     }
+  }
+  void stopAlarm(int id){
+    PeriodicAlarm.stop(id);
   }
 }

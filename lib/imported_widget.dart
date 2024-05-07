@@ -51,7 +51,7 @@ class _RotatableDial1State extends State<RotatableDial1> {
         height: 300.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: Color(0xFFCFE9FC),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -161,7 +161,7 @@ class _RotatableDialState extends State<RotatableDial> {
         height: 200.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: Color(0xFFCFE9FC),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -228,13 +228,17 @@ class AnalogClockContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.all(20.0),
+        margin: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20.0),
         decoration: AnalogClockDecoration(),
         child: const AnalogClock(
-          dialColor: null,
+          hourHandLengthFactor: 0.8,
+          hourHandWidthFactor: 0.5,
+          minuteHandLengthFactor: 0.8,
+          secondHandLengthFactor: 0.9,
+          dialColor: Color(0xFFCFE9FC),
           markingColor: null,
           hourNumberColor: null,
-          secondHandColor: null,
+          secondHandColor: Colors.redAccent,
         ),
       ),
     );

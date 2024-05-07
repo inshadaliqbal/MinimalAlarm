@@ -47,6 +47,9 @@ class AlarmCardMainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoSwitch(
+      trackColor: Colors.white38,
+      thumbColor: Colors.blueGrey,
+      activeColor: Colors.white,
         value: isActiveValue,
         onChanged: (bool newValue) {
           onChangedFunction();
