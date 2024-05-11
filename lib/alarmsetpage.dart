@@ -193,6 +193,7 @@ class _AlarmSetState extends State<AlarmSet> {
                         onPressed: () {
                           AlarmSetSaveButtonFunction(context, widget);
                           Navigator.pop(context);
+                          Provider.of<MainEngine>(context,listen: false).alarmEngine(context);
                         },
                         child: Text(
                           'Save',

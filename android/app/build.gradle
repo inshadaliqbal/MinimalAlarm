@@ -6,6 +6,7 @@ plugins {
 
 configurations.all {
     resolutionStrategy {
+        force "androidx.core:core-ktx:1.10.1"
         eachDependency {
             if ((requested.group == "org.jetbrains.kotlin") && (requested.name.startsWith("kotlin-stdlib"))) {
                 useVersion("1.8.0")
@@ -34,7 +35,7 @@ if (flutterVersionName == null) {
 
 android {
 
-    compileSdkVersion 33
+    compileSdkVersion 34
     namespace "com.example.malarm"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
