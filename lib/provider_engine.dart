@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
-import 'package:malarm/alarm_ring_page.dart';
 import 'alarm_card_class.dart';
 import 'dayclass.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:alarm/alarm.dart';
 
 import 'main.dart';
 
 class MainEngine extends ChangeNotifier {
   MainEngine() {
-    AndroidAlarmManager.initialize();
+    Alarm.init();
+    print(DateTime(2024,DateTime.now().month,DateTime.now().day,2,DateTime.now().minute,0,0,0));
 
   }
 
@@ -107,50 +107,29 @@ class MainEngine extends ChangeNotifier {
       }
 
       alarmDayWiseAdding(hourConverted, i);
-      // PeriodicAlarm.ringStream.stream.listen((_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),)
+      // Alarm.ringStream.stream.listen((_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),);
     }
   }
 
   void alarmDayWiseAdding(int hourSelected, int i) async {
-
     for (AlarmCardClass alarmCard in alarmCardList) {
-      print(hourSelected);
-      // final alarmSettings = AlarmModel(
-      //   id: i,
-      //   dateTime: DateTime(
-      //       DateTime.now().year,
-      //       DateTime.now().month,
-      //       DateTime.now().day,
-      //       hourSelected,
-      //       alarmCard.minuteSelected,
-      //       0,
-      //       0,
-      //       0),
-      //   assetAudioPath: 'assets/real.wav',
-      //   loopAudio: true,
-      //   fadeDuration: 3.0,
-      //   notificationTitle: 'This is the title',
-      //   notificationBody: 'This is the body',
-      //   enableNotificationOnKill: true,
-      //   monday: false,
-      //   tuesday: false,
-      //   wednesday: false,
-      //   thursday: false,
-      //   friday: false,
-      //   saturday: false,
-      //   sunday: false,
-      //   active: true,
-      // );
-      AndroidAlarmManager.oneShotAt(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,hourSelected,alarmCard.minuteSelected,0,0,0),1,alarmDone,
-        alarmClock: true
+      final alarmSettings = AlarmSettings(
+        id: 42,
+        dateTime: DateTime(2024,DateTime.now().month,DateTime.now().day,hourSelected,alarmCard.minuteSelected,0,0,0),
+        assetAudioPath: 'assets/real.wave',
+        loopAudio: true,
+        vibrate: true,
+        fadeDuration: 3.0,
+        notificationTitle: 'This is the title',
+        notificationBody: 'This is the body',
+        enableNotificationOnKill: true,
       );
+      Alarm.set(alarmSettings: alarmSettings);
     }
   }
-  static void alarmDone(){
-    print('object');
-    navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage);
-  }
+
+
   void stopAlarm(int id){
-    AndroidAlarmManager.cancel(id);
+    Alarm.stopAll();
   }
 }
