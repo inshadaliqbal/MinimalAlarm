@@ -1,3 +1,6 @@
+import 'package:malarm/provider_engine.dart';
+import 'package:provider/provider.dart';
+
 class AlarmCardClass {
   String? alarmTitle;
   int hourSelected;
@@ -21,6 +24,7 @@ class AlarmCardClass {
 
   void isActiveSwitch() {
     isActive = !isActive!;
+
   }
 
   void vibrateChange(){

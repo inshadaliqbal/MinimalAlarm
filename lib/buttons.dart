@@ -53,6 +53,7 @@ class AlarmCardMainButton extends StatelessWidget {
         value: isActiveValue,
         onChanged: (bool newValue) {
           onChangedFunction();
+          Provider.of<MainEngine>(context,listen: false).stopAlarm();
         });
   }
 }

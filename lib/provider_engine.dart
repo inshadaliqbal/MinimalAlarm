@@ -11,12 +11,6 @@ import 'package:alarm/alarm.dart';
 import 'main.dart';
 
 class MainEngine extends ChangeNotifier {
-  MainEngine() {
-
-  }
-
-
-
   bool? status;
 
   void permissionGranted(PermissionStatus granted) {
@@ -28,13 +22,13 @@ class MainEngine extends ChangeNotifier {
     AlarmCardClass(
         alarmTitle: 'New Alarm',
         daysList: [
-          Days(day: 'Sunday',daySelect: false),
-          Days(day: 'Monday',daySelect: false),
-          Days(day: 'Tuesday',daySelect: false),
-          Days(day: 'Wednesday',daySelect: false),
-          Days(day: 'Thursday',daySelect: false),
-          Days(day: 'Friday',daySelect: false),
-          Days(day: 'Saturday',daySelect: false)
+          Days(day: 'Sunday', daySelect: false),
+          Days(day: 'Monday', daySelect: false),
+          Days(day: 'Tuesday', daySelect: false),
+          Days(day: 'Wednesday', daySelect: false),
+          Days(day: 'Thursday', daySelect: false),
+          Days(day: 'Friday', daySelect: false),
+          Days(day: 'Saturday', daySelect: false)
         ],
         hourSelected: 10,
         minuteSelected: 00,
@@ -110,68 +104,45 @@ class MainEngine extends ChangeNotifier {
 
       alarmDayWiseAdding(hourConverted, i);
 
-
-      if (alarmCardList[i].isActive! && alarmCardList[i].daysList![1].daySelect == true){
-        Alarm.ringStream.stream.listen(
-          (_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),
-        );
-      } else {
-        Alarm.stopAll();
-      }
+      Alarm.ringStream.stream.listen((_) {
+        if (alarmCardList[i].isActive! &&
+            alarmCardList[i].daysList![1].daySelect == true) {
+          navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage);
+        } else {
+          Alarm.stop(42);
+        }
+      });
     }
   }
 
-  void alarmDayWiseAdding(int hourSelected,int i)async {
-    for (AlarmCardClass alarmCard in alarmCardList){
-      for (Days day in alarmCard.daysList!) {
-        List<int> daySelectedList=[];
-        if (day.daySelect == true && day.day == 'Sunday') {
-          daySelectedList.add(7);
-        }else if(day.daySelect == true && day.day == 'Monday'){
-          daySelectedList.add(1);
-        }else if(day.daySelect == true && day.day == 'Tuesday'){
-          daySelectedList.add(2);
-        }else if(day.daySelect == true && day.day == 'Wednesday'){
-          daySelectedList.add(3);
-        }else if(day.daySelect == true && day.day == 'Thursday'){
-          daySelectedList.add(4);
-        }else if(day.daySelect == true && day.day == 'Friday'){
-          daySelectedList.add(5);
-        }else if(day.daySelect == true && day.day == 'Saturday'){
-          daySelectedList.add(6);
-        }
-        for (int e in daySelectedList){
-          print('${e} hello its connection');
-          final alarmSettings = await AlarmSettings(
-
-              id: i + e + hourSelected,
-              dateTime: DateTime(
-                  DateTime
-                      .now()
-                      .year,
-                  DateTime
-                      .now()
-                      .month,
-                  e,
-                  hourSelected,
-                  alarmCardList[i].minuteSelected,
-                  0,
-                  0,
-                  0),
-              assetAudioPath: 'assets/real.wav',
-              loopAudio: true,
-              vibrate: true,
-              fadeDuration: 3.0,
-              notificationTitle: 'This is the title',
-              notificationBody: 'This is the body',
-              enableNotificationOnKill: true,
-              androidFullScreenIntent: true);
-          alarmList.add(Alarm.set(alarmSettings: alarmSettings));
-
-        }
-        }
-      }
+  void alarmDayWiseAdding(int hourSelected, int i) async {
+    for (AlarmCardClass alarmCard in alarmCardList) {
+      final alarmSettings = await AlarmSettings(
+        id: 42,
+        dateTime: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+            hourSelected,
+            alarmCard.minuteSelected,
+            0,
+            0,
+            0),
+        assetAudioPath: 'assets/real.wav',
+        loopAudio: true,
+        vibrate: true,
+        fadeDuration: 3.0,
+        notificationTitle: 'This is the title',
+        notificationBody: 'This is the body',
+        enableNotificationOnKill: true,
+      );
+      Alarm.set(alarmSettings: alarmSettings);
     }
   }
 
+  void stopAlarm() {
+    Alarm.stop(42);
 
+    notifyListeners();
+  }
+}

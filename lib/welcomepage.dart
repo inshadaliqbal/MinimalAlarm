@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:malarm/constants.dart';
-import 'package:malarm/provider_engine.dart';
-import 'package:provider/provider.dart';
+import 'package:alarm/alarm.dart';
 import 'buttons.dart';
 import 'widgets.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
@@ -14,6 +14,7 @@ class Malarm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Alarm.init();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -35,7 +36,7 @@ class Malarm extends StatelessWidget {
             hourMinuteDigitTextStyle: kDigitalClockText,
             secondDigitTextStyle: kDigitalClockText,
           ),
-          MainListViewBuilder(),
+          Expanded(child: MainListViewBuilder()),
         ],
       ),
     );

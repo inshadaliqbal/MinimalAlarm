@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:malarm/alarm_card_class.dart';
 import 'package:malarm/constants.dart';
 import 'package:provider/provider.dart';
@@ -57,22 +58,24 @@ class _AlarmSetState extends State<AlarmSet> {
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFDCECF5),
-        body: SafeArea(
+        body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Row(
-                children: [
-                  AlarmSetBackButton(),
-                  Padding(
-                    padding: EdgeInsets.only(left: 105.0),
-                    child: Text(
-                      'Add Alarm',
-                      style: kAlarmSetTitle,
+              Expanded(
+                child: const Row(
+                  children: [
+                    AlarmSetBackButton(),
+                    Padding(
+                      padding: EdgeInsets.only(left: 105.0),
+                      child: Text(
+                        'Add Alarm',
+                        style: kAlarmSetTitle,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Column(
                 children: [

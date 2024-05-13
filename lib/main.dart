@@ -19,7 +19,7 @@ void main() {
       create: (context) => MainEngine(),
       child: MaterialApp(
         navigatorKey: navigatorKey,
-        initialRoute: Malarm.malarm,
+        initialRoute: AlarmRingPage.ringPage,
         routes: {
           Malarm.malarm: (context) => Malarm(),
           AlarmSet.alarmSet: (context) => AlarmSet(
