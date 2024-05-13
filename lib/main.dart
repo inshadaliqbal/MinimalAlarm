@@ -1,4 +1,6 @@
 
+import 'package:alarm/model/alarm_settings.dart';
+
 import 'provider_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:malarm/alarmsetpage.dart';
@@ -7,6 +9,7 @@ import 'welcomepage.dart';
 import 'alarm_card_class.dart';
 import 'dayclass.dart';
 import 'alarm_ring_page.dart';
+import 'package:alarm/alarm.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -65,10 +68,13 @@ void main() {
 //
 // class _NewWidgetState extends State<NewWidget> {
 //   @override
-//   void initState() {
+//   void initState(){
 //     super.initState();
 //     // TODO: implement initState
-//     Alarm.init();
+//     void function1() async{
+//       await Alarm.init();
+//     }
+//     function1();
 //   }
 //
 //   @override
@@ -79,42 +85,34 @@ void main() {
 //           child: Text('Alarm'),
 //           onPressed: () async {
 //             await Alarm.set(alarmSettings: alarmSettings);
-//             Alarm.ringStream.stream
-//                 .listen((_) => yourOnRingCallback(context));
+//             // Alarm.ringStream.stream
+//             //     .listen((_) => yourOnRingCallback(context));
 //           },
 //         ),
 //       ),
 //     );
 //   }
 // }
-//
-// void yourOnRingCallback(BuildContext context) {
-//   Navigator.push(
-//     context,
-//     MaterialPageRoute(
-//       builder: (context) => AlarmSet(
-//         alarmCardClass: AlarmCardClass(
-//             alarmTitle: 'New Alarm',
-//             daysList: [
-//               Days(day: 'Sunday'),
-//               Days(day: 'Monday'),
-//               Days(day: 'Tuesday'),
-//               Days(day: 'Wednesday'),
-//               Days(day: 'Thursday'),
-//               Days(day: 'Friday'),
-//               Days(day: 'Saturday')
-//             ],
-//             hourSelected: 12,
-//             minuteSelected: 00,
-//             zoneSelected: 'Am',
-//             isActive: true,
-//             vibrateActive: true,
-//             fileSelectedPath: ''),
-//         currentIndex: Provider.of<MainEngine>(context).getListLength() + 1,
-//       ),
-//     ),
-//   );
-// }
+// //
+// // void yourOnRingCallback(BuildContext context) {
+// //   Navigator.push(
+// //     context,
+// //     MaterialPageRoute(
+// //       builder: (context) => AlarmSet(
+// //         alarmCardClass: AlarmCardClass(
+// //             alarmTitle: 'New Alarm',
+// //             daysList: ,
+// //             hourSelected: 12,
+// //             minuteSelected: 00,
+// //             zoneSelected: 'Am',
+// //             isActive: true,
+// //             vibrateActive: true,
+// //             fileSelectedPath: ''),
+// //         currentIndex: Provider.of<MainEngine>(context).getListLength() + 1,
+// //       ),
+// //     ),
+// //   );
+// // }
 //
 // final alarmSettings = AlarmSettings(
 //     id: 42,

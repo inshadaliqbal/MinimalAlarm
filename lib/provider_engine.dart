@@ -1,4 +1,6 @@
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:malarm/alarm_ring_page.dart';
 import 'alarm_card_class.dart';
 import 'dayclass.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -10,10 +12,10 @@ import 'main.dart';
 
 class MainEngine extends ChangeNotifier {
   MainEngine() {
-    Alarm.init();
-    print(DateTime(2024,DateTime.now().month,DateTime.now().day,2,DateTime.now().minute,0,0,0));
 
   }
+
+
 
   bool? status;
 
@@ -26,13 +28,13 @@ class MainEngine extends ChangeNotifier {
     AlarmCardClass(
         alarmTitle: 'New Alarm',
         daysList: [
-          Days(day: 'Sunday', daySelect: false),
-          Days(day: 'Monday', daySelect: false),
-          Days(day: 'Tuesday', daySelect: false),
-          Days(day: 'Wednesday', daySelect: false),
-          Days(day: 'Thursday', daySelect: false),
-          Days(day: 'Friday', daySelect: false),
-          Days(day: 'Saturday', daySelect: false)
+          Days(day: 'Sunday',daySelect: false),
+          Days(day: 'Monday',daySelect: false),
+          Days(day: 'Tuesday',daySelect: false),
+          Days(day: 'Wednesday',daySelect: false),
+          Days(day: 'Thursday',daySelect: false),
+          Days(day: 'Friday',daySelect: false),
+          Days(day: 'Saturday',daySelect: false)
         ],
         hourSelected: 10,
         minuteSelected: 00,
@@ -75,7 +77,7 @@ class MainEngine extends ChangeNotifier {
 
   void onChangedFunction(BuildContext context, int index) {
     alarmCardList[index].isActiveSwitch();
-    stopAlarm(index);
+    alarmEngine(context);
     notifyListeners();
   }
 
@@ -91,7 +93,7 @@ class MainEngine extends ChangeNotifier {
 
   List<Future<bool>> alarmList = [];
 
-  void alarmEngine(BuildContext context) {
+  void alarmEngine(BuildContext context) async {
     for (int i = 0; i < alarmCardList.length; i++) {
       int hourConverted;
       if (alarmCardList[i].zoneSelected == 'AM' &&
@@ -107,29 +109,69 @@ class MainEngine extends ChangeNotifier {
       }
 
       alarmDayWiseAdding(hourConverted, i);
-      // Alarm.ringStream.stream.listen((_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),);
+
+
+      if (alarmCardList[i].isActive! && alarmCardList[i].daysList![1].daySelect == true){
+        Alarm.ringStream.stream.listen(
+          (_) => navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage),
+        );
+      } else {
+        Alarm.stopAll();
+      }
     }
   }
 
-  void alarmDayWiseAdding(int hourSelected, int i) async {
-    for (AlarmCardClass alarmCard in alarmCardList) {
-      final alarmSettings = AlarmSettings(
-        id: 42,
-        dateTime: DateTime(2024,DateTime.now().month,DateTime.now().day,hourSelected,alarmCard.minuteSelected,0,0,0),
-        assetAudioPath: 'assets/real.wave',
-        loopAudio: true,
-        vibrate: true,
-        fadeDuration: 3.0,
-        notificationTitle: 'This is the title',
-        notificationBody: 'This is the body',
-        enableNotificationOnKill: true,
-      );
-      Alarm.set(alarmSettings: alarmSettings);
+  void alarmDayWiseAdding(int hourSelected,int i)async {
+    for (AlarmCardClass alarmCard in alarmCardList){
+      for (Days day in alarmCard.daysList!) {
+        List<int> daySelectedList=[];
+        if (day.daySelect == true && day.day == 'Sunday') {
+          daySelectedList.add(7);
+        }else if(day.daySelect == true && day.day == 'Monday'){
+          daySelectedList.add(1);
+        }else if(day.daySelect == true && day.day == 'Tuesday'){
+          daySelectedList.add(2);
+        }else if(day.daySelect == true && day.day == 'Wednesday'){
+          daySelectedList.add(3);
+        }else if(day.daySelect == true && day.day == 'Thursday'){
+          daySelectedList.add(4);
+        }else if(day.daySelect == true && day.day == 'Friday'){
+          daySelectedList.add(5);
+        }else if(day.daySelect == true && day.day == 'Saturday'){
+          daySelectedList.add(6);
+        }
+        for (int e in daySelectedList){
+          print('${e} hello its connection');
+          final alarmSettings = await AlarmSettings(
+
+              id: i + e + hourSelected,
+              dateTime: DateTime(
+                  DateTime
+                      .now()
+                      .year,
+                  DateTime
+                      .now()
+                      .month,
+                  e,
+                  hourSelected,
+                  alarmCardList[i].minuteSelected,
+                  0,
+                  0,
+                  0),
+              assetAudioPath: 'assets/real.wav',
+              loopAudio: true,
+              vibrate: true,
+              fadeDuration: 3.0,
+              notificationTitle: 'This is the title',
+              notificationBody: 'This is the body',
+              enableNotificationOnKill: true,
+              androidFullScreenIntent: true);
+          alarmList.add(Alarm.set(alarmSettings: alarmSettings));
+
+        }
+        }
+      }
     }
   }
 
 
-  void stopAlarm(int id){
-    Alarm.stopAll();
-  }
-}

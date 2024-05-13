@@ -11,6 +11,7 @@ class Malarm extends StatelessWidget {
   static const String malarm = 'welcome_screen';
   const Malarm({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
