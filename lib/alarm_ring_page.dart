@@ -5,15 +5,22 @@ import 'package:provider/provider.dart';
 import 'provider_engine.dart';
 
 class AlarmRingPage extends StatelessWidget {
-
-
-
   static const String ringPage = 'alarm_ring_page';
   String title;
+  int? alarmHour;
+  int? alarmMinute;
+  String? alarmZone;
   Function functionForSnooze;
   Function functionForClose;
 
-  AlarmRingPage({required this.title, required this.functionForSnooze, required this.functionForClose, super.key});
+  AlarmRingPage(
+      {required this.title,
+      required this.alarmHour,
+      required this.alarmMinute,
+      required this.alarmZone,
+      required this.functionForSnooze,
+      required this.functionForClose,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +28,7 @@ class AlarmRingPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MainEngine(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -43,7 +51,7 @@ class AlarmRingPage extends StatelessWidget {
                       '${title}',
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 30,
+                          fontSize: 20,
                           fontWeight: FontWeight.w900),
                     ),
                     Expanded(
@@ -57,8 +65,8 @@ class AlarmRingPage extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '${DateTime.timestamp().hour}',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            '${alarmHour!} : ${alarmMinute!} ${alarmZone!}',
+                            style: TextStyle(fontSize: 50, color: Colors.white),
                           ),
                         ),
                       ),
@@ -91,44 +99,69 @@ class AlarmRingPage extends StatelessWidget {
                             flex: 3,
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(20)),
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(
+                                  colors: [Colors.white, Colors.black],
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp,
+                                ),
+                              ),
                               child: SwipeActionCell(
+                                backgroundColor: Colors.transparent,
+
                                 /// this key is necessary
                                 key: ObjectKey('list[index]'),
                                 trailingActions: <SwipeAction>[
                                   SwipeAction(
+                                    color: Colors.transparent,
                                     performsFirstActionWithFullSwipe: true,
                                     onTap: (CompletionHandler handler) async {
                                       functionForSnooze;
                                       Navigator.pop(context);
-                                      Provider.of<MainEngine>(context,listen: false).stopAlarm();
+                                      Provider.of<MainEngine>(context,
+                                              listen: false)
+                                          .stopAlarm();
                                     },
                                   ),
                                 ],
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        "Swipe Left",
-                                        style: TextStyle(fontSize: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.arrow_back_outlined,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(5),
-                                      padding: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          color: Colors.black26,
-                                          borderRadius: BorderRadius.circular(20)),
-                                      child: Icon(
-                                        Icons.alarm,
-                                        size: 50,
-                                        color: Colors.white,
+                                      Text(
+                                        "Snooze",
+                                        style: TextStyle(
+                                            fontSize: 18, color: Colors.white),
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        margin: EdgeInsets.all(5),
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.black54,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Icon(
+                                          Icons.alarm,
+                                          size: 50,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -175,5 +208,3 @@ class AlarmRingPage extends StatelessWidget {
 //         ),
 //       )
 //     ]).show();
-
-

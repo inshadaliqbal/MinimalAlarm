@@ -106,8 +106,19 @@ class MainEngine extends ChangeNotifier {
 
       Alarm.ringStream.stream.listen((_) {
         if (alarmCardList[i].isActive! &&
-            alarmCardList[i].daysList![1].daySelect == true) {
-          navigatorKey.currentState!.pushNamed(AlarmRingPage.ringPage);
+            alarmCardList[i].daysList![3].daySelect == true) {
+          navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) {
+              return AlarmRingPage(
+                title: alarmCardList[i].alarmTitle!,
+                functionForSnooze: () {},
+                functionForClose: () {},
+                alarmHour: alarmCardList[i].hourSelected,
+                alarmMinute: alarmCardList[i].minuteSelected,
+                alarmZone: alarmCardList[i].zoneSelected,
+              );
+            }),
+          );
         } else {
           Alarm.stop(42);
         }
@@ -118,7 +129,7 @@ class MainEngine extends ChangeNotifier {
   void alarmDayWiseAdding(int hourSelected, int i) async {
     for (AlarmCardClass alarmCard in alarmCardList) {
       final alarmSettings = await AlarmSettings(
-        id: 42,
+        id: i+1,
         dateTime: DateTime(
             DateTime.now().year,
             DateTime.now().month,

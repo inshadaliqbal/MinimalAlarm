@@ -51,12 +51,12 @@ class _RotatableDial1State extends State<RotatableDial1> {
         height: 300.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(0xFFCFE9FC),
+          color: Color(0xFF8FEADD),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
+              spreadRadius: 2,
+              blurRadius: 2,
               offset: Offset(0, 3), // changes position of shadow
             ),
           ],
@@ -89,7 +89,7 @@ class _RotatableDial1State extends State<RotatableDial1> {
                     child: Text(
                       '${index + 1 == 60 ? index = 00 : index + 1}',
                       style: TextStyle(
-                        fontSize: 10.0,
+                        fontSize: 7.0,
                         color: Colors.black, // Change number text color
                       ),
                     ),
@@ -161,13 +161,13 @@ class _RotatableDialState extends State<RotatableDial> {
         height: 200.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(0xFFCFE9FC),
+          color: Color(0xFF8FEADD),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3),
+              spreadRadius: 2,
+              blurRadius: 1,
+              offset: Offset(0, 1),
             ),
           ],
         ),
@@ -199,7 +199,7 @@ class _RotatableDialState extends State<RotatableDial> {
                     child: Text(
                       '${index + 1}',
                       style: TextStyle(
-                        fontSize: 10.0,
+                        fontSize: 12.0,
                         color: Colors.black, // Change number text color
                       ),
                     ),
@@ -228,16 +228,21 @@ class AnalogClockContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        height: 250,
+        width: 250,
         margin: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20.0),
         decoration: AnalogClockDecoration(),
         child: const AnalogClock(
+
+          hourNumbers: ['.','.','3','.','.','6','.','.','9','.','.','12'],
           hourHandLengthFactor: 0.8,
           hourHandWidthFactor: 0.5,
           minuteHandLengthFactor: 0.8,
           secondHandLengthFactor: 0.9,
-          dialColor: Color(0xFFCFE9FC),
+          dialColor: Color(0xFF8FEADD),
           markingColor: null,
-          hourNumberColor: null,
+          hourNumberColor: Colors.black,
+          hourNumberSizeFactor: 0.8,
           secondHandColor: Colors.redAccent,
         ),
       ),

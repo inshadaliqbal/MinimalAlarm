@@ -17,13 +17,13 @@ class FAButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xFF6DE6C2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       child: const Icon(
         Icons.add,
-        color: Colors.white,
+        color: Colors.black,
         size: 30,
       ),
       onPressed: () {

@@ -57,7 +57,6 @@ class _AlarmSetState extends State<AlarmSet> {
         return MainEngine();
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFFDCECF5),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -124,6 +123,7 @@ class _AlarmSetState extends State<AlarmSet> {
                               widget.alarmCardClass.alarmTitle = value;
                             },
                             decoration: InputDecoration(
+
                               hintText: widget.alarmCardClass.alarmTitle
                             ),
                           ),

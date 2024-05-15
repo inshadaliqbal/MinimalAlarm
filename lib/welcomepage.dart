@@ -18,21 +18,22 @@ class Malarm extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFFFDCECF5),
+        backgroundColor: Color(0xFFC8FFFD),
         title: Center(
           child: Text(
-            'Alarm',
+            'Minimal Alarm',
             style:
-                TextStyle(fontSize: 20, color: Colors.black, letterSpacing: 2),
+                TextStyle(fontFamily: 'Josefin',fontSize: 30, color: Colors.black, letterSpacing: 1,fontWeight: FontWeight.w400),
           ),
         ),
       ),
       floatingActionButton: const FAButton(),
-      backgroundColor: const Color(0xFFFDCECF5),
+      backgroundColor: const Color(0xFFC8FFFD),
       body: Column(
         children: [
           const AnalogClockContainer(),
           DigitalClock(
+            is24HourTimeFormat: false,
             hourMinuteDigitTextStyle: kDigitalClockText,
             secondDigitTextStyle: kDigitalClockText,
           ),
