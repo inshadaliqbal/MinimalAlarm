@@ -111,7 +111,9 @@ class MainEngine extends ChangeNotifier {
             MaterialPageRoute(builder: (context) {
               return AlarmRingPage(
                 title: alarmCardList[i].alarmTitle!,
-                functionForSnooze: () {},
+                functionForSnooze: () {
+                  print("hai");
+                },
                 functionForClose: () {},
                 alarmHour: alarmCardList[i].hourSelected,
                 alarmMinute: alarmCardList[i].minuteSelected,
