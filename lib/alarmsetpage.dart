@@ -69,7 +69,7 @@ class _AlarmSetState extends State<AlarmSet> {
                     Padding(
                       padding: EdgeInsets.only(left: 105.0),
                       child: Text(
-                        'Add Alarm',
+                        'Add Alarm ',
                         style: kAlarmSetTitle,
                       ),
                     ),
